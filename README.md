@@ -2,7 +2,6 @@ jumbotron
 =========
 early draft
 in development
-
 == API ==
 * slide(slide) – change slide. 'slide' can be:
 ** 'previous', 'prev', 'next', 'first', 'last'
