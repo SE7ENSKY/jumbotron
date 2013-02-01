@@ -1,8 +1,8 @@
-jumbotron
+#jumbotron
 =========
 early draft
 in development
-== API ==
+##API
 * slide(slide) – change slide. 'slide' can be:
 ** 'previous', 'prev', 'next', 'first', 'last'
 ** 'random'
@@ -10,7 +10,7 @@ in development
 ** numeric slide index
 ** domElement or $(domElement)
 
-== Events ==
+## Events
 * startedSlideshow – when slideshow is started
 * stoppedSlideshow – when slideshow is stopped
 * slideSwitching(from, to) – when started swithing to a slide
