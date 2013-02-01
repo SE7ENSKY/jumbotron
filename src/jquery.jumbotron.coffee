@@ -7,11 +7,20 @@ class Jumbotron
 			@$.find("#{@options.slideSelector}:first").addClass(@options.activeClassname)
 
 		@startSlideshow() if @options.slideshow
+		@initializeSwitcher() if @options.switcher
+
+	initializeSwitcher: ->
+		$switcher = @$.find @options.switcherSelector
+		$switcher.find("[rel=slide]").each (i, el) =>
+			$(el).bind @options.switcherEvent, =>
+				@showSlide i
 
 	switchSlides: ($previousSlide, $nextSlide) ->
 		console.log "switchSlides"
 		console.log $previousSlide
 		console.log $nextSlide
+
+		# ToDo: parametrize it
 		$previousSlide.removeClass @options.activeClassname
 		$nextSlide.addClass @options.activeClassname
 
@@ -19,8 +28,8 @@ class Jumbotron
 		$previousSlide = @$.find "#{@options.slideSelector}.#{@options.activeClassname}"
 		$nextSlide = null
 		switch typeof slide
-			when 'slide'
-				$nextSlide = @$.find "#{@options.slideSelector}:index(#{slide})"
+			when 'number'
+				$nextSlide = @$.find "#{@options.slideSelector}:eq(#{slide})"
 			when 'object'
 				$nextSlide = slide
 			# ToDo: accept slide by index, domElement, $(domElement)
@@ -31,7 +40,7 @@ class Jumbotron
 
 	nextSlide: ->
 		$activeSlide = @$.find "#{@options.slideSelector}.#{@options.activeClassname}"
-		$nextSlide = $activeSlide.next()
+		$nextSlide = $activeSlide.next @options.slideSelector
 		$nextSlide = @$.find "#{@options.slideSelector}:first" if $nextSlide.length is 0
 		@showSlide $nextSlide
 
@@ -43,10 +52,13 @@ class Jumbotron
 
 $.fn.jumbotron = (options) ->
 	defaults =
-		slideshow: off
+		switcher: off
+		slideshow: on
 		slideshowInterval: 5000
-		slideSelector: '> .slide'
+		slideSelector: '.slides > div'
 		activeClassname: 'active'
+		switcherSelector: '.switcher'
+		switcherEvent: 'mouseover'
 	options = $.extend {}, defaults, options
 
 	$.each @, ->

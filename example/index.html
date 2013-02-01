@@ -5,10 +5,12 @@
 
 		<style type="text/css">
 			.wrap { width:960px; margin-left:auto; margin-right:auto; }
-			.jumbotron .slide { height:350px; display:none; }
-			.jumbotron .slide.active { display:block; }
-			.jumbotron .slide h2 { background-color:yellow; display:inline-block; padding:10px; }
-			.jumbotron .slide p { background-color:rgba(128, 128, 128, 0.5); display:inline-block; padding:5px; }
+			.jumbotron { position:relative; }
+			.jumbotron .slides > div { height:350px; display:none; }
+			.jumbotron .slides > div.active { display:block; }
+			.jumbotron .slides > div h2 { background-color:yellow; display:inline-block; padding:10px; }
+			.jumbotron .slides > div p { background-color:rgba(128, 128, 128, 0.5); display:inline-block; padding:5px; }
+			.jumbotron .switcher { position:absolute; bottom:0; width:100%; height:100px; background-color:rgba(0, 0, 0, 0.5); }
 		</style>
 
 		<script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
@@ -18,24 +20,34 @@
 	<body>
 		<div class="wrap">
 			<div class="jumbotron">
-				<div class="slide" style="background-image:url('http://cosmopolite.dev.se7ensky.com/wp-content/uploads/2013/01/room-1.jpg')">
-					<h2>НОМЕР «ЛЮКС»</h2>
-					<p>
-						Wi-Fi, кофемашина, холодильник, а также сейф в который умещается стандартный лептоп.
-					</p>
+				<div class="slides">
+					<div style="background-image:url('http://cosmopolite.dev.se7ensky.com/wp-content/uploads/2013/01/room-1.jpg')">
+						<h2>НОМЕР «ЛЮКС»</h2>
+						<p>
+							Wi-Fi, кофемашина, холодильник, а также сейф в который умещается стандартный лептоп.
+						</p>
+					</div>
+					<div style="background-image:url('http://cosmopolite.dev.se7ensky.com/wp-content/uploads/2013/01/room-2.jpg')">
+						<h2>НОМЕР «ДЕЛЮКС»</h2>
+						<p>
+							Wi-Fi, кофемашина, холодильник, а также сейф в который умещается стандартный лептоп.
+						</p>
+					</div>
+					<div style="background-image:url('http://cosmopolite.dev.se7ensky.com/wp-content/uploads/2013/01/room-3.jpg')">
+						<h2>НОМЕР «СТАНДАРТ»</h2>
+						<p>
+							Wi-Fi, мини-бар, оборудование для приготовления чая и кофе,
+	а также сейф в который умещается стандартный лептоп.
+						</p>
+					</div>
 				</div>
-				<div class="slide" style="background-image:url('http://cosmopolite.dev.se7ensky.com/wp-content/uploads/2013/01/room-2.jpg')">
-					<h2>НОМЕР «ДЕЛЮКС»</h2>
-					<p>
-						Wi-Fi, кофемашина, холодильник, а также сейф в который умещается стандартный лептоп.
-					</p>
-				</div>
-				<div class="slide" style="background-image:url('http://cosmopolite.dev.se7ensky.com/wp-content/uploads/2013/01/room-3.jpg')">
-					<h2>НОМЕР «СТАНДАРТ»</h2>
-					<p>
-						Wi-Fi, мини-бар, оборудование для приготовления чая и кофе,
-а также сейф в который умещается стандартный лептоп.
-					</p>
+
+				<div class="switcher">
+					<ul>
+						<li><a rel="slide" href="#" title="">slide 1</a></li>
+						<li><a rel="slide" href="#" title="">slide 2</a></li>
+						<li><a rel="slide" href="#" title="">slide 3</a></li>
+					</ul>
 				</div>
 			</div>
 		</div>

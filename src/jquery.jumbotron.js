@@ -15,7 +15,21 @@
       if (this.options.slideshow) {
         this.startSlideshow();
       }
+      if (this.options.switcher) {
+        this.initializeSwitcher();
+      }
     }
+
+    Jumbotron.prototype.initializeSwitcher = function() {
+      var $switcher,
+        _this = this;
+      $switcher = this.$.find(this.options.switcherSelector);
+      return $switcher.find("[rel=slide]").each(function(i, el) {
+        return $(el).bind(_this.options.switcherEvent, function() {
+          return _this.showSlide(i);
+        });
+      });
+    };
 
     Jumbotron.prototype.switchSlides = function($previousSlide, $nextSlide) {
       console.log("switchSlides");
@@ -30,8 +44,8 @@
       $previousSlide = this.$.find("" + this.options.slideSelector + "." + this.options.activeClassname);
       $nextSlide = null;
       switch (typeof slide) {
-        case 'slide':
-          $nextSlide = this.$.find("" + this.options.slideSelector + ":index(" + slide + ")");
+        case 'number':
+          $nextSlide = this.$.find("" + this.options.slideSelector + ":eq(" + slide + ")");
           break;
         case 'object':
           $nextSlide = slide;
@@ -45,7 +59,7 @@
     Jumbotron.prototype.nextSlide = function() {
       var $activeSlide, $nextSlide;
       $activeSlide = this.$.find("" + this.options.slideSelector + "." + this.options.activeClassname);
-      $nextSlide = $activeSlide.next();
+      $nextSlide = $activeSlide.next(this.options.slideSelector);
       if ($nextSlide.length === 0) {
         $nextSlide = this.$.find("" + this.options.slideSelector + ":first");
       }
@@ -70,10 +84,13 @@
   $.fn.jumbotron = function(options) {
     var defaults;
     defaults = {
-      slideshow: false,
+      switcher: false,
+      slideshow: true,
       slideshowInterval: 5000,
-      slideSelector: '> .slide',
-      activeClassname: 'active'
+      slideSelector: '.slides > div',
+      activeClassname: 'active',
+      switcherSelector: '.switcher',
+      switcherEvent: 'mouseover'
     };
     options = $.extend({}, defaults, options);
     $.each(this, function() {

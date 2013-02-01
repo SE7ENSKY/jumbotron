@@ -3,8 +3,10 @@
 
   $(function() {
     return $(".jumbotron").jumbotron({
-      slideshow: true,
-      slideshowInterval: 2500
+      slideshow: false,
+      slideshowInterval: 2500,
+      switcher: true,
+      switcherSelector: '.switcher'
     });
   });
 
