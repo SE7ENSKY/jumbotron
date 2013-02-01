@@ -11,7 +11,7 @@ class Jumbotron
 
 	initializeSwitcher: ->
 		$switcher = @$.find @options.switcherSelector
-		$switcher.find("[rel=slide]").each (i, el) =>
+		$switcher.each (i, el) =>
 			$(el).bind @options.switcherEvent, =>
 				@showSlide i
 
@@ -28,17 +28,24 @@ class Jumbotron
 		$previousSlide = @$.find "#{@options.slideSelector}.#{@options.activeClassname}"
 		$nextSlide = null
 		switch typeof slide
+			when 'string' then switch slide
+				when 'next' then console.warn 'not implemented'
+				when 'prev' then console.warn 'not implemented'
+				when 'first' then console.warn 'not implemented'
+				when 'last' then console.warn 'not implemented'
+				else console.error 'Unsupported show slide command ' + slide
+
 			when 'number'
-				$nextSlide = @$.find "#{@options.slideSelector}:eq(#{slide})"
+				$nextSlide = @$.find "#{@options.slideSelector}:eq(#{slide})" #ToDo: check range
 			when 'object'
 				$nextSlide = slide
 			# ToDo: accept slide by index, domElement, $(domElement)
 		
-		return if $nextSlide is $previousSlide
+		if $nextSlide isnt $previousSlide
+			@switchSlides $previousSlide, $nextSlide
+		@ #Allows do chain calls
 
-		@switchSlides $previousSlide, $nextSlide
-
-	nextSlide: ->
+	nextSlide: -> #ToDo: move to showSlide
 		$activeSlide = @$.find "#{@options.slideSelector}.#{@options.activeClassname}"
 		$nextSlide = $activeSlide.next @options.slideSelector
 		$nextSlide = @$.find "#{@options.slideSelector}:first" if $nextSlide.length is 0
@@ -47,8 +54,10 @@ class Jumbotron
 	startSlideshow: ->
 		@stopSlideshow()
 		@slideshowInterval = setInterval @nextSlide.bind(@), @options.slideshowInterval
+		@ #Allows to do chain calls
 	stopSlideshow: ->
 		clearInterval @slideshowInterval if @slideshowInterval
+		@ #Allows to do chain calls
 
 $.fn.jumbotron = (options) ->
 	defaults =
@@ -57,7 +66,7 @@ $.fn.jumbotron = (options) ->
 		slideshowInterval: 5000
 		slideSelector: '.slides > div'
 		activeClassname: 'active'
-		switcherSelector: '.switcher'
+		switcherSelector: '.switcher li'
 		switcherEvent: 'mouseover'
 	options = $.extend {}, defaults, options
 

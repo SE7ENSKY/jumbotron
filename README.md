@@ -4,11 +4,11 @@ early draft
 in development
 ##API
 * slide(slide) – change slide. 'slide' can be:
-** 'previous', 'prev', 'next', 'first', 'last'
-** 'random'
-** '-2', '+3'
-** numeric slide index
-** domElement or $(domElement)
+ * 'previous', 'prev', 'next', 'first', 'last'
+ * 'random'
+ * '-2', '+3'
+ * numeric slide index
+ * domElement or $(domElement)
 
 ## Events
 * startedSlideshow – when slideshow is started
