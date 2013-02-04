@@ -40,7 +40,8 @@ class Jumbotron
 			else console.error("Unsupported show slide parametr with type #{typeof slide}")
 		if $nextSlide isnt $previousSlide
 			@switchSlides $previousSlide, $nextSlide
-		@ #Allows do chain calls
+			@restartSlideshow() if @slideshowInterval
+		@ # allows do chain calls
 
 	getActiveSlide: -> @$.find "#{@options.slideSelector}.#{@options.activeClassname}"
 	getActiveSlideIndex: -> @getSlides().index(@getActiveSlide())
