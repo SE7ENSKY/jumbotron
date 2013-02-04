@@ -5,3 +5,5 @@ src/*.js
 
 .DS_Store
 Thumbs.db
+
+.idea/*

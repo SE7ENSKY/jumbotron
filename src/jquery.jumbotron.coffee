@@ -53,14 +53,15 @@ class Jumbotron
 	last: -> @showSlide('last')
 	first: -> @showSlide('first')
 
+	restartSlideshow: ->  @startSlideshow()
 
 	startSlideshow: ->
 		@stopSlideshow()
 		@slideshowInterval = setInterval @next.bind(@), @options.slideshowInterval
-		@ #Allows to do chain calls
+		@ # allows to do chain calls
 	stopSlideshow: ->
 		clearInterval @slideshowInterval if @slideshowInterval
-		@ #Allows to do chain calls
+		@ # allows to do chain calls
 
 $.fn.jumbotron = (options) ->
 	defaults =
