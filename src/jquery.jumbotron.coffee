@@ -26,6 +26,8 @@ class Jumbotron
 		switch typeof slide
 			when 'string'
 				slide = $.trim(slide)
+				if slide[0] in ['-', '+'] and !isNaN(offset = parseInt(slide))
+					return @showSlide(@getActiveSlideIndex() + offset)
 				switch slide
 					when 'random' then @showSlide(Math.floor(Math.random() * 1000000))
 					when 'next' then @showSlide(@getActiveSlideIndex() + 1)
@@ -63,6 +65,7 @@ class Jumbotron
 		@ # allows to do chain calls
 	stopSlideshow: ->
 		clearInterval @slideshowInterval if @slideshowInterval
+		@slideshowInterval = null
 		@ # allows to do chain calls
 
 $.fn.jumbotron = (options) ->
