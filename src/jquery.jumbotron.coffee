@@ -16,11 +16,7 @@ class Jumbotron
 				@showSlide i
 
 	switchSlides: ($previousSlide, $nextSlide) ->
-		console.log "switchSlides"
-		console.log $previousSlide
-		console.log $nextSlide
-
-		# ToDo: parametrize it
+		# ToDo: parametrize it ## ? how?? examples?
 		$previousSlide.removeClass @options.activeClassname
 		$nextSlide.addClass @options.activeClassname
 
@@ -28,32 +24,38 @@ class Jumbotron
 		$previousSlide = @$.find "#{@options.slideSelector}.#{@options.activeClassname}"
 		$nextSlide = null
 		switch typeof slide
-			when 'string' then switch slide
-				when 'next' then console.warn 'not implemented'
-				when 'prev' then console.warn 'not implemented'
-				when 'first' then console.warn 'not implemented'
-				when 'last' then console.warn 'not implemented'
-				else console.error 'Unsupported show slide command ' + slide
-
+			when 'string'
+				switch slide
+					when 'next' then @showSlide(@getActiveSlideIndex() + 1)
+					when 'prev' then @showSlide(@getActiveSlideIndex() - 1)
+					when 'first' then @showSlide(0)
+					when 'last' then @showSlide(@getSlidesCount() - 1)
+					else console.error("Unsupported show slide command #{slide}")
+				return @
 			when 'number'
-				$nextSlide = @$.find "#{@options.slideSelector}:eq(#{slide})" #ToDo: check range
+				$nextSlide = @$.find "#{@options.slideSelector}:eq(#{slide % @getSlidesCount()})"
 			when 'object'
 				$nextSlide = slide
-			# ToDo: accept slide by index, domElement, $(domElement)
-		
+				# ToDo: accept slide by index, domElement, $(domElement)
+			else console.error("Unsupported show slide parametr with type #{typeof slide}")
 		if $nextSlide isnt $previousSlide
 			@switchSlides $previousSlide, $nextSlide
 		@ #Allows do chain calls
 
-	nextSlide: -> #ToDo: move to showSlide
-		$activeSlide = @$.find "#{@options.slideSelector}.#{@options.activeClassname}"
-		$nextSlide = $activeSlide.next @options.slideSelector
-		$nextSlide = @$.find "#{@options.slideSelector}:first" if $nextSlide.length is 0
-		@showSlide $nextSlide
+	getActiveSlide: -> @$.find "#{@options.slideSelector}.#{@options.activeClassname}"
+	getActiveSlideIndex: -> @getSlides().index(@getActiveSlide())
+	getSlidesCount: -> @getSlides().length
+	getSlides: -> @$.find("#{@options.slideSelector}")
+
+	next: -> @showSlide('next')
+	prev: -> @showSlide('prev')
+	last: -> @showSlide('last')
+	first: -> @showSlide('first')
+
 
 	startSlideshow: ->
 		@stopSlideshow()
-		@slideshowInterval = setInterval @nextSlide.bind(@), @options.slideshowInterval
+		@slideshowInterval = setInterval @next.bind(@), @options.slideshowInterval
 		@ #Allows to do chain calls
 	stopSlideshow: ->
 		clearInterval @slideshowInterval if @slideshowInterval
