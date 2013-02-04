@@ -39,8 +39,11 @@ class Jumbotron
 			when 'number'
 				$nextSlide = @$.find "#{@options.slideSelector}:eq(#{slide % @getSlidesCount()})"
 			when 'object'
-				$nextSlide = slide
-				# ToDo: accept slide by index, domElement, $(domElement)
+				if (newIndex = @getSlides().index(slide)) is -1
+					console.error "Invalid object provided as switchSlide Element"
+				else
+					@showSlide(newIndex)
+				return @
 			else console.error("Unsupported show slide parametr with type #{typeof slide}")
 		if $nextSlide isnt $previousSlide
 			@switchSlides $previousSlide, $nextSlide
