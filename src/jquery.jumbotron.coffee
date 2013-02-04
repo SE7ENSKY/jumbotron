@@ -43,9 +43,10 @@ class Jumbotron
 		
 		if $nextSlide isnt $previousSlide
 			@switchSlides $previousSlide, $nextSlide
-		@ #Allows do chain calls
+			@restartSlideshow() if @slideshowInterval
+		@ # allows do chain calls
 
-	nextSlide: -> #ToDo: move to showSlide
+	nextSlide: -> # ToDo: move to showSlide
 		$activeSlide = @$.find "#{@options.slideSelector}.#{@options.activeClassname}"
 		$nextSlide = $activeSlide.next @options.slideSelector
 		$nextSlide = @$.find "#{@options.slideSelector}:first" if $nextSlide.length is 0
@@ -54,10 +55,13 @@ class Jumbotron
 	startSlideshow: ->
 		@stopSlideshow()
 		@slideshowInterval = setInterval @nextSlide.bind(@), @options.slideshowInterval
-		@ #Allows to do chain calls
+		@ # allows to do chain calls
+	restartSlideshow: ->
+		@startSlideshow()
+		@
 	stopSlideshow: ->
 		clearInterval @slideshowInterval if @slideshowInterval
-		@ #Allows to do chain calls
+		@ # allows to do chain calls
 
 $.fn.jumbotron = (options) ->
 	defaults =
