@@ -25,7 +25,9 @@ class Jumbotron
 		$nextSlide = null
 		switch typeof slide
 			when 'string'
+				slide = $.trim(slide)
 				switch slide
+					when 'random' then @showSlide(Math.floor(Math.random() * 1000000))
 					when 'next' then @showSlide(@getActiveSlideIndex() + 1)
 					when 'prev' then @showSlide(@getActiveSlideIndex() - 1)
 					when 'first' then @showSlide(0)
