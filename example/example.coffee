@@ -1,7 +1,7 @@
-$ ->
-	$(".jumbotron").jumbotron
-		slideshow: off
-		slideshowInterval: 2500
-		switcher: on
-		switcherSelector: '.switcher li'
-	window.api = $(".jumbotron").data('jumbotron')
+$(".jumbotron").jumbotron
+	slideSelector: '.item'
+	slideshow: on
+	slideshowInterval: 2500
+	switcher: on
+	switcherSelector: '.switcher li'
+	switcherEvent: 'click'
