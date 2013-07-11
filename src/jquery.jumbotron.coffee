@@ -16,8 +16,11 @@ class Jumbotron
 				@showSlide i
 
 	switchSlides: ($previousSlide, $nextSlide) ->
-		# ToDo: parametrize it ## ? how?? examples?
 		$previousSlide.removeClass @options.activeClassname
+		if @options.switcher
+			i = @getSlides().index($nextSlide)
+			@$.find(@options.switcherSelector).removeClass @options.activeClassname
+			@$.find(@options.switcherSelector).eq(i).addClass @options.activeClassname
 		$nextSlide.addClass @options.activeClassname
 
 	showSlide: (slide) ->
