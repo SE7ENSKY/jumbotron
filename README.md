@@ -1,7 +1,7 @@
 #jumbotron
-=========
-early draft
-in development
+
+Deprecated.
+
 ##API
 * slide(slide) – change slide. 'slide' can be:
  * 'previous', 'prev', 'next', 'first', 'last'
